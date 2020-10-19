@@ -98,6 +98,7 @@ void GLWidget::initializeGL() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+    printCube(0, 0, 0);
 }
 
 // This is called when the OpenGL window is resized
@@ -143,53 +144,59 @@ void GLWidget::paintGL() {
 }
 
 void GLWidget::printCube(float offsetX, float offsetY, float offsetZ) {
-    glBindTexture(GL_TEXTURE_2D, TextureId[1]);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, MatAmb);
-    glMaterialfv(GL_FRONT, GL_EMISSION, MatClean);
-    glColorMaterial(GL_FRONT, GL_DIFFUSE);
+    GLint _displayListId = glGenLists(1);
+    glNewList(_displayListId, GL_COMPILE);
+        glBindTexture(GL_TEXTURE_2D, TextureId[1]);
+        glMaterialfv(GL_FRONT, GL_AMBIENT, MatAmb);
+        glMaterialfv(GL_FRONT, GL_EMISSION, MatClean);
+        glColorMaterial(GL_FRONT, GL_DIFFUSE);
 
-    glBegin(GL_QUADS);
-    // Front face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
-    // Back face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
-    glTexCoord2f(-1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
-    glTexCoord2f(-1.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
-    // Left face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
-    glTexCoord2f(-1.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
-    glTexCoord2f(-1.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
-    // Right face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
-    // Bottom face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
-    glTexCoord2f(-1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
-    glTexCoord2f(-1.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
-    glEnd();
+        glBegin(GL_QUADS);
+        // Front face
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
+        glTexCoord2f(1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
+        // Back face
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
+        glTexCoord2f(-1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
+        glTexCoord2f(-1.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
+        // Left face
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
+        glTexCoord2f(-1.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
+        glTexCoord2f(-1.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
+        // Right face
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
+        glTexCoord2f(1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
+        glTexCoord2f(1.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
+        // Bottom face
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
+        glTexCoord2f(-1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ - 0.5f);
+        glTexCoord2f(-1.0f, 1.0f); glVertex3f(offsetX + 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(offsetX - 0.5f, offsetY + 0.0f, offsetZ + 0.5f);
+        glEnd();
 
-    // Top face separated to use another texture
-    glBindTexture(GL_TEXTURE_2D, TextureId[2]);
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
-    glTexCoord2f(-1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
-    glTexCoord2f(-1.0f, -1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
-    glTexCoord2f(0.0f, -1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
-    glEnd();
+        // Top face separated to use another texture
+        glBindTexture(GL_TEXTURE_2D, TextureId[2]);
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
+        glTexCoord2f(-1.0f, 0.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ - 0.5f);
+        glTexCoord2f(-1.0f, -1.0f); glVertex3f(offsetX + 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
+        glTexCoord2f(0.0f, -1.0f); glVertex3f(offsetX - 0.5f, offsetY + 1.0f, offsetZ + 0.5f);
+        glEnd();
+    glEndList();
 }
 
 void GLWidget::printLevel(int width, float y) {
     for(int i = 0; i < width; i++) {
         for(int j = 0; j < width; j++) {
-            printCube(i - width/2, y, j - width/2);
+            glPushMatrix();
+            glTranslatef(i - width/2, y, j - width/2);
+            glCallList(1);
+            glPopMatrix();
         }
     }
 }

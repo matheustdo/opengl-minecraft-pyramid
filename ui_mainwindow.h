@@ -33,7 +33,6 @@ public:
     QLabel *label_3;
     QLabel *label_4;
     QLabel *label_5;
-    QLabel *label_6;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -65,9 +64,6 @@ public:
         label_5 = new QLabel(widget);
         label_5->setObjectName(QStringLiteral("label_5"));
         label_5->setGeometry(QRect(20, 90, 251, 16));
-        label_6 = new QLabel(widget);
-        label_6->setObjectName(QStringLiteral("label_6"));
-        label_6->setGeometry(QRect(20, 110, 311, 16));
 
         verticalLayout_2->addWidget(widget);
 
@@ -86,7 +82,6 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "WASD or mouse left click + drag to movement", Q_NULLPTR));
         label_4->setText(QApplication::translate("MainWindow", "Press mouse right click and drag to change view angle", Q_NULLPTR));
         label_5->setText(QApplication::translate("MainWindow", "Roll mouse scroll to zoom in and zoom out", Q_NULLPTR));
-        label_6->setText(QApplication::translate("MainWindow", "2th avaliation by Matheus Teles and Rafael Azevedo", Q_NULLPTR));
     } // retranslateUi
 
 };
